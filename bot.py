@@ -17,12 +17,15 @@ def get_next_chunk():
   else:
     chunk = sentences[0][0:140]
 
+  # remove new line characters and replace with a space
+  final_chunk = chunk.replace("\n", " ")
+  
   # delete what we just tweeted from the text file
   text_file.seek(0)
-  text_file.write(text_string[len(chunk):len(text_string)])
+  text_file.write(text_string[len(final_chunk):len(text_string)])
   text_file.truncate()
   text_file.close()
-  return chunk
+  return final_chunk
 
 def tweet(message):
   auth = tweepy.OAuthHandler(secrets.consumer_key, secrets.consumer_secret)
